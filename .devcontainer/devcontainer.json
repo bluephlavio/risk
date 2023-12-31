@@ -1,0 +1,21 @@
+{
+	"name": "risk",
+	"image": "mcr.microsoft.com/devcontainers/python:1-3.12-bullseye",
+	"features": {
+		"ghcr.io/devcontainers-contrib/features/poetry:2": {}
+	},
+
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"GitHub.github-vscode-theme",
+				"GitHub.copilot",
+				"GitHub.copilot-chat",
+				"ms-python.python",
+				"ms-python.pylint",
+				"ms-python.black-formatter",
+				"ms-toolsai.jupyter"
+			]
+		}
+	}
+}

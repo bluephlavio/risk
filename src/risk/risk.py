@@ -40,13 +40,11 @@ class AttackNotAllowed(Exception):
 
 
 class Strategy(object):
-
     def go_on(self, battle):
         return True
 
 
 class Battle(object):
-
     def __init__(self, a_tanks, d_tanks):
         self.a_tanks = a_tanks
         self.d_tanks = d_tanks
@@ -83,10 +81,18 @@ class Battle(object):
         if self.can_go_on():
             a_losses, d_losses = losses(a_roll, d_roll)
             if verbose:
-                print('attack roll: {}'.format(a_roll))
-                print('defence roll: {}'.format(d_roll))
-                print('attack lose {} tank{}'.format(a_losses, '' if a_losses == 1 else 's'))
-                print('defence lose {} tank{}'.format(d_losses, '' if d_losses == 1 else 's'))
+                print("attack roll: {}".format(a_roll))
+                print("defence roll: {}".format(d_roll))
+                print(
+                    "attack lose {} tank{}".format(
+                        a_losses, "" if a_losses == 1 else "s"
+                    )
+                )
+                print(
+                    "defence lose {} tank{}".format(
+                        d_losses, "" if d_losses == 1 else "s"
+                    )
+                )
             self.a_tanks -= a_losses
             self.d_tanks -= d_losses
         else:
@@ -95,23 +101,22 @@ class Battle(object):
     def simulate(self, oneshot=False, strategy=Strategy(), verbose=False):
         if verbose:
             print(self)
-        if self.can_go_on() and (strategy(self) if callable(strategy) else strategy.go_on(self)):
+        if self.can_go_on() and (
+            strategy(self) if callable(strategy) else strategy.go_on(self)
+        ):
             a_roll = roll(a_dices(self.a_tanks))
             d_roll = roll(d_dices(self.d_tanks))
             if verbose:
-                print('go on!')
+                print("go on!")
             self.evolve(a_roll, d_roll, verbose=verbose)
             if not oneshot:
                 self.simulate(oneshot=False, strategy=strategy, verbose=verbose)
         else:
             if verbose:
                 if self.is_a_winner():
-                    print('attack wins!')
+                    print("attack wins!")
                 else:
-                    print('defense resists!')
+                    print("defense resists!")
 
     def __str__(self):
-        return 'attack tanks: {}, defence tanks: {}'.format(self.a_tanks, self.d_tanks)
-
-
-
+        return "attack tanks: {}, defence tanks: {}".format(self.a_tanks, self.d_tanks)
